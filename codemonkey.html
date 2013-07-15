@@ -1,0 +1,372 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="google-site-verification" content="EAj69LWyUjPKqDxg9Kvc1VylQLV8k4ITGeKqtqCf6Js" />
+
+<title>CodeMonkeyJack welcomes you!</title>
+
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jqueryui182custom.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jquery.easing.compatibility.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jquery.getscrollbar.width.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jquery.client.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jquery.fieldselection.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/jackedClock.js"></script>
+<script type="text/javascript" src="http://www.codemonkeyjack.com/newJackedCorner.js"></script>
+
+<script type="text/javascript">$(document).ready(function(){
+	winH = $(window).height();
+	winW = $(window).width();
+	docuWt = $(document).width();
+	docuHt = $(document).height();
+	bodWt = $("body").width();
+	bodHt = $("body").height();
+	hypTxtWt = $("html").width();
+	hypTxtHt = $("html").height();
+	scrollW = $.getScrollbarWidth();
+
+	$("body").css({"height":winH+"px"});
+});</script>
+
+<style type="text/css">
+html {overflow:hidden !important; margin:0px!important;}
+
+/* --- MAIN TABLE ---*/
+#bodyTable { position:absolute; display:table; z-index:10; margin:0px;}
+
+#headRw {}
+#heaDv {position:relative; display:block; z-index:99999; height:57px;}
+#headCel	{ padding-left:15px; padding-bottom:0px; text-align:left; height:79px;}
+#headTbl { font-family:'Century Gothic', Arial, Helvetica, sans-serif; font-size:58px; line-height:62px; color:#afaf00; font-weight:bold; font-variant:small-caps; text-align:left;
+border-style:solid; border-width:1px; border-radius:5px; -moz-border-radius:5px; -webkit-border-radius:5px; border-color:#00CCFF;
+}
+#headerBox { padding:5px; text-align:left; background-image:url(img/titleBG-07.png); background-repeat:repeat-x; background-position:bottom; background-color:#000000; color:#ffffff; border-style:solid; border-width:1px; border-color:#FFFF00;}
+
+#contentRw { }
+#contentTbl { height:0px;}
+#contCelOne {width:45px!important; overflow:visible; float:left; z-index:15;padding:0px; padding-top:15px; text-align:left;}
+#contCelTwo {padding:0px; padding-right:0px; color:#000000;}
+#contCelTwoDisp { padding:0px; padding-left:0px; background-color:#32d8ff; width:100%; overflow:auto; background-image:url(./img/mBG01.jpg); background-repeat:repeat;}
+
+#footRw {}
+#footCel {text-align:center; height:80px;}
+#stuffCel {}
+#footTbl { width:100%;}
+
+/*---------------NavSlide ----------------*/
+.#slideTbl {  }
+.bavConTbl {}
+.navCont { position:static; display:block; float:left; top:100px; left:0px; z-index:99999; cursor:pointer;}
+.navContCel {display:none; height:30px;}
+.navContCel a {text-align:right}
+.navCel {border-style:solid; border-width:1px; border-right-width:0px;}
+.navLbl { padding:3px; padding-top:9px; padding-bottom:5px; border-style:solid; border-width:2px; border-left-width:1px; width:25px; position:relative; display:block!important; float:left; font-size:14px; line-height:16px; background-color:#000000;}
+
+.slideMenu { padding:1px; width:135px; border-style:solid; border-width:1px; -moz-border-radius:0px 0px 5px 5px; -webkit-border-radius:0px 0px 5px 5px; border-top-width:0px; display:none; position:relative; top:0px; right:-43px; z-index:99999; background-color:#000000;}
+.slideMenu a { color:#FFFFFF;}
+.slideList { width:100%; font-family:Arial, Helvetica, sans-serif; font-size:12px; line-height:14px;}
+.slideListBox { padding:5px; border-style:solid; border-width:1px; -moz-border-radius:5px; -webkit-border-radius:5px;}
+
+.menuTtl {text-align:right;padding:7px; padding-right:15px; padding-bottom:6px; border-style:solid; border-width:1px; width:155px; height:16px; background-color:#000000; margin:1px; font-size:14px; line-height:16px;}
+#mainLbl, #mainCel, #mainSlide, #mainLst, #mainLst td {border-color:#FFCC00;}
+#compLbl, #compCel, #compSlide, #compLst, #compLst td {border-color:#FF00CC;}
+#trixLbl, #trixCel, #trixSlide, #trixLst, #trixLst td {border-color:#0099FF;}
+#contactLbl, #contactCel, #contactSlide, #contactLst, #contactLst td { border-color:#66FFFF;}
+.slideTblCel {padding-bottom:5px;}
+
+#mainLst {}
+
+
+/*--- CLOCK ----*/
+#clock { padding-top:2px; border-style:solid; border-width:1px; border-color:#afaf00; font-size:16px; line-height:18px; text-align:center; width:85px; height:20px; cursor:pointer; text-align:center; margin:5px; color:#ffff00; display:block; position:relative; float:left; z-index:12345;}
+.jclock { color:#ffff00;}
+
+.ui-icon-triangle-1-s {background-position:-65px -16px;}
+.wrapper{/*height: 401px;width: 650px;margin: 0px auto;border: 1px solid black;*/}
+.content{/*width: 100%;height:100%*/}
+
+.ui-draggable .ui-dialog-titlebar { cursor: move; }
+/* Corner radius */
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px; -khtml-border-top-left-radius: 4px; border-top-left-radius: 4px; }
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px; -khtml-border-top-right-radius: 4px; border-top-right-radius: 4px; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px; -khtml-border-bottom-left-radius: 4px; border-bottom-left-radius: 4px; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px; -khtml-border-bottom-right-radius: 4px; border-bottom-right-radius: 4px; }
+
+.ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; width: 16px; height: 16px; background-image: url(http://www.codemonkeyjack.com/img/uiIcons-000000.png);}
+.ui-state-default .ui-icon { background-image: url(http://www.codemonkeyjack.com/img/uiIcons-000000.png); }
+.ui-state-hover .ui-icon, .ui-state-focus .ui-icon {background-image: url(http://www.codemonkeyjack.com/img/uiIcons-00ff00.png); }
+.ui-state-active .ui-icon {background-image: url(http://www.codemonkeyjack.com/img/uiIcons-05bafd.png); }
+
+.jb-shortscroll-wrapper{ display:block; width: 18px; z-index: 1500;}
+.jb-shortscroll-wrapper .jb-shortscroll-track{ width: 100%; height: 100%; display: block;}
+.jb-shortscroll-track .jb-shortscroll-scrollbar{ height: 80px; z-index: 1501; position: absolute; -moz-box-shadow: 3px 3px 3px #666; -webkit-box-shadow: 3px 3px 3px #666; box-shadow: 3px 3px 3px #666; width: 16px;}
+.jb-shortscroll-wrapper .jb-shortscroll-marker{ height: 80px; width: 16px; background: #999; opacity:0.7; position: absolute; top: 0px;}
+/* add gradient to the middle and buttons */
+.jb-shortscroll-scrollbar .jb-shortscroll-scrollbar-middle, .jb-shortscroll-scrollbar .jb-shortscroll-scrollbar-btn{ background-color: #DADADA; background: -moz-linear-gradient(100% 100% 180deg, #B3B3B3,#DADADA); background: -webkit-gradient(linear, left top, right top, from(#DADADA), to(#B3B3B3));}
+.jb-shortscroll-scrollbar .jb-shortscroll-scrollbar-btn{ border:1px solid #ABA9A9; cursor: pointer;}
+.jb-shortscroll-scrollbar .ui-state-hover{ border:1px solid #7F7F7F;}
+.jb-shortscroll-scrollbar .jb-shortscroll-scrollbar-middle{ height: 48px; border-left:1px solid #ABA9A9; border-right:1px solid #ABA9A9;}
+.jb-shortscroll-wrapper .jb-shortscroll-stopper{ background:#0000a0; border: 1px solid #000000; position: absolute; bottom: -8px; display: block; height: 3px; width: 16px; opacity:0.7;}
+.jb-shortscroll-target{ overflow:hidden;}
+
+</style>
+
+<script type="text/javascript">$(document).ready(function(){
+if ($.browser.msie) {$(".navContCel").css({"height":"18px"});}
+//$("#contCelTwoDisp").load("http://www.codemonkeyjack.com/main.html");
+});</script>
+
+<script type="text/javascript" charset="utf-8">$(window).load(function () {
+	var cnTblH = $("#conTbl").height();
+	var headClH = $("#headTbl").height();
+	var footClH = $("#footCel").height();
+	var cntClHt = winH-headClH-footClH;
+	var sideW = $("#contCelOne").width();
+	var cntClW = (winW-sideW);
+	
+	if ($.browser.msie) {cntClW = (winW-sideW);}
+	else {cntClW = (winW-sideW-(scrollW/2));}
+	
+	$("#bodyTable").css({"width":winW+"px", "height":winH+"px"});
+	$("#contentTbl").css({"height":cntClHt+"px", "width":winW+"px"});
+	$("#contCelTwo").css({"height":cntClHt+"px", "width":cntClW+"px"});
+	$("#contCelTwoDisp").css({"height":cntClHt+"px", "width":cntClW+"px"});
+	$("#contCelTwoDisp").children("body").css({"width":cntClW+"px"});
+	$("#contCelTwoDisp").children("body").find("table:first").css({"width":cntClW+"px"});
+});</script>
+
+
+<script type="text/javascript" charset="utf-8">$(document).ready(function () {
+$(window).resize(function() {
+	var windoH = $(window).height();
+	var windoW = $(window).width();
+	if (windoH < 500) {
+	}
+	else {
+		var cnTblH = $("#conTbl").height();
+		var headClH = $("#headTbl").height();
+		var footClH = $("#footCel").height();
+		var cntClHt = winH-headClH-footClH;
+		var sideW = $("#contCelOne").width();
+		var cntClW = (winW-sideW);
+	
+		if ($.browser.msie) {cntClW = (winW-sideW);}
+		else {cntClW = (winW-sideW-(scrollW/2));}
+	
+		$("#bodyTable").css({"width":winW+"px", "height":winH+"px"});
+		$("#contentTbl").css({"height":cntClHt+"px", "width":winW+"px"});
+		$("#contCelTwo").css({"height":cntClHt+"px", "width":cntClW+"px"});
+		$("#contCelTwoDisp").css({"height":cntClHt+"px", "width":cntClW+"px"});
+		$("#contCelTwoDisp").children("body").css({"width":cntClW+"px"});
+		$("#contCelTwoDisp").children("body").find("table:first").css({"width":cntClW+"px"});
+	}
+});
+});</script>
+
+<script type="text/javascript">$(function($) {var options = {utc: true}
+$('div.jclock').jclock(options);});</script>
+
+<script type="text/javascript" charset="utf-8">$(document).ready(function () {
+double = (true || false);
+//$("#footCel").append('<b>2xClickState: '+ double +'<'+'/b'+'> - ');
+	$("div.navLbl").live("click", function () {
+		if(double == true) {
+//			$(this).selectable("enable");
+			$(this).attr({name:"currenTab"});
+			double = false;
+		}
+		else {
+//			$(this).selectable("disable");
+			$("div.navLbl").removeAttr("name");
+			double = true;
+		}
+//	$("#footCel").append('<b>2xClickState: '+ double +'<'+'/b'+'> - ');
+});
+$(".navCont").live("mouseover", function () {
+	$(this).attr({id:"activeNav"});
+	var nvBrd = $("#activeNav").children().find(".navContCel").css("border-top-color");
+		$("#activeNav").children().find(".navContCel, .navLbl, a").css({"color":nvBrd, "font-weight":"bold"});
+}).live("mouseout", function () {
+	$(this).removeAttr("id");
+	$(this).children().find(".navContCel, .navLbl, a").css({"color":"#ffffff", "font-weight":"normal"});
+})
+	
+});</script>
+
+
+
+<script type="text/javascript" charset="utf-8">$(document).ready(function () {
+	$("div.navLbl").live("click", function () {
+		if (double == true) {
+			$("div.navContCel").hide("fast");
+//			$(this).removeAttr("name");
+		}
+		else {
+		$("div.navContCel#currenTab").hide("fast");
+		$("div.navContCel:not(div#activeNav)").hide("fast");
+		$("div#activeNav").children().find("div.navContCel").slideToggle();
+		}
+	});
+	$("div.menuTtl").live("click", function () { $(this).parent("div.navContCel").children("div.slideMenu").slideToggle(); });
+	$(".slideListBox").live("click", function () {
+		$("div.slideMenu:visible").slideUp();
+		$("div.navContCel:visible").slideUp('fast');
+	});
+});</script>
+
+
+<script type="text/javascript" charset="utf-8">$(window).load(function () {
+$("div#contactDv, div#trixDv, div#compDv").live("click", function () {
+	$(this).parent("div.navContCel").children("div.slideMenu").slideToggle();
+});
+});</script>
+
+
+<script type="text/javascript" charset="utf-8">$(document).ready(function () {
+$("div#mainLbl").pil("right");
+$("div#compLbl").pil("right");
+$("div#trixLbl").pil("right");
+$("div#contactLbl").pil("right");
+$("div#clock").pil();
+/*$("div#clock").draggable();*/
+});</script>
+
+<script type="text/javascript">$(document).ready(function(){
+$("#contCelTwo").shortscroll();
+//$("#contCelTwoDisp").shortscroll();
+});</script>
+
+</head>
+
+<body style="background-color:#000000; color:#FfffFF; font-family:Arial; font-size:12px; line-height:15px; letter-spacing:0px; margin:0px!important;">
+<table border="0" cellpadding="0" cellspacing="0" id="bodyTable">
+<tr id="headRw"><td valign="top" id="headCel"><div id="heaDv">
+	<table border="0" cellpadding="0" cellspacing="0">
+	<tr><td>
+		<table border="0" cellpadding="0" cellspacing="3" id="headTbl">
+		<tr valign="middle"><td id="headerBox">C</td><td id="headerBox">o</td><td id="headerBox">d</td><td id="headerBox">e</td>
+			<td id="headerBox">M</td><td id="headerBox">o</td><td id="headerBox">n</td><td id="headerBox">k</td><td id="headerBox">e</td><td id="headerBox">y</td>
+			<td id="headerBox">J</td><td id="headerBox">a</td><td id="headerBox">c</td><td id="headerBox">k</td>
+		</tr>
+		</table></td>
+		<td style="padding-left:105px;"><div id="clock"><div class="jclock"></div></div></td>
+	</tr>
+	</table></div>
+</td></tr>
+<tr><td>
+<table border="0" cellpadding="0" cellspacing="0">
+<tr valign="top" id="contentRw"><td id="contCelOne">
+	<table border="0" cellpadding="0" cellspacing="0" id="slideTbl">
+<tbody>
+<tr><td class="slideTblCel"><div class="navCont">
+<table align="left" border="0" cellpadding="0" cellspacing="0" class="bavConTbl">
+<tr valign="top"><td class="navCel" id="mainCel"><div id="mainCel" class="navContCel"><div class="menuTtl">MAIN</div>
+<div id="mainSlide" class="slideMenu">
+<table border="0" cellpadding="0" cellspacing="3" id="mainLst" class="slideList">
+<tr><td><div class="slideListBox" title="Mr.Gibbs rocks in stereo!"><a href="http://www.moviepopquiz.com/" target="_blank"><b>MoviePopQuiz</b></a></div></td></tr>
+<tr><td><div class="slideListBox" title="News you don't get from TV!"><a href="http://www.codemonkeyjack.com/WeirdStuff/index.html" target="_blank"><b>CodeMonkeyJack&rsquo;s<br>Weird News</b></a></div></td></tr>
+<tr><td style="padding:5px;"><div id="compDv"><b>Codemonkey Friends</b></div></td></tr>
+<tr><td><div class="slideListBox" title="David Hasselhoff on Acid"><a href="http://www.davidhasselhoffonacid.com/" target="_blank"><b>D.H.o.A.</b></a></div></td></tr>
+<tr><td><div class="slideListBox" title="Belding - the band"><a href="http://belding.codemonkeyjack.com/" target="_blank"><b>Belding</b></a></div></td></tr>
+<tr><td><div class="slideListBox" title="The Artwork of Fynd"><a href="http://www.missfynd.com/" target="_blank"><b>Ms.Fynd</b></a></div></td></tr>
+<tr><td><div class="slideListBox" title="Some pretty funny shit!"><a href="http://www.moiraprefecture.com/" target="_blank"><b>Moira Prefecture</b></a></div></td></tr>
+<tr><td><div class="slideListBox" title="Some pretty scary shit!"><a href="http://hattisview.codemonkeyjack.com/" target="_blank"><b>Hattisview</b></a></div></td></tr>
+<tr><td><div class="slideListBox" title="Incognito Cinema Warriors XP"><a href="http://www.icwxp.com/" target="_blank"><b>ICW: XP</b></a></div></td></tr>
+<tr><td style="padding:5px;"><div id="compDv"><b>Codemonkey Likes</b></div></td></tr>
+<tr><td><div class="slideListBox" title="Help others, help yourself"><a href="http://www.codemonkeyjack.com/linx.html" target="_blank"><b>LINKS</b></a></div></td></tr>
+</table></div>
+</div></td>
+<td><div id="mainLbl" class="navLbl">&#9658;</div></td></tr>
+</table></div></td></tr>
+<tr><td class="slideTblCel"><div class="navCont">
+<table align="left" border="0" cellpadding="0" cellspacing="0" class="bavConTbl">
+<tr valign="top"><td class="navCel" id="compCel"><div id="compCel" class="navContCel"><div class="menuTtl">Computers 101</div>
+<div id="compSlide" class="slideMenu">
+<table border="0" cellpadding="0" cellspacing="3" id="compLst" class="slideList">
+<tr><td><a href="http://www.codemonkeyjack.com/XPShortcuts.html"><div id="compDv" class="slideListBox" title="http://www.codemonkeyjack.com/XPShortcuts.html"><b>XP Keyboard Shortcuts</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/FireFox4Tweaks.html"><div id="compDv" class="slideListBox"><b>FireFox 4 Tweaks</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/OperaTips.html"><div id="compDv" class="slideListBox"><b>Opera Tweaks</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/OSX.html"><div id="compDv" class="slideListBox"><b>OSX</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/JailBreaking.html"><div id="compDv" class="slideListBox"><b>iJailBreak</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/animatedPCS.html"><div id="compDv" class="slideListBox"><b>Open GIFs in CS3-5</b></div></a></td></tr>
+<tr><td align="center" style="padding-top:10px;"><div id="compDv"><b style="font-size:15px; color:#FFFF00;">HTML Code</b></div></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/EntitiesChart-IE6.html" target="_blank"><div id="compDv" class="slideListBox"><b>IE6 Friendly Entities</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/EntitiesChart.html" target="_blank"><div id="compDv" class="slideListBox"><b>Big Entity Chart</b></div></a></td></tr>
+
+</table></div></div></td>
+<td><div id="compLbl" class="navLbl">&#9658;</div></td></tr>
+</table></div></td></tr>
+<tr><td class="slideTblCel"><div class="navCont">
+<table align="left" border="0" cellpadding="0" cellspacing="0" class="bavConTbl">
+<tr valign="top"><td class="navCel" id="trixCel"><div id="trixCel" class="navContCel"><div class="menuTtl">TIPS &amp; TRIX</div>
+<div id="trixSlide" class="slideMenu">
+<table border="0" cellpadding="0" cellspacing="3" id="trixLst" class="slideList">
+<tr><td><a href="http://www.codemonkeyjack.com/Trix.html"><div id="trixDv" class="slideListBox" title="http://www.codemonkeyjack.com/Trix.html"><b>Trix &amp; Hax</b></div></a></td></tr>
+
+<tr><td><a href="http://www.codemonkeyjack.com/u3d/index.html"><div id="trixDv" class="slideListBox" title="http://www.codemonkeyjack.com/u3d/index.html"><b>Unity3D</b></div></a></td></tr>
+<tr><td><a href="http://www.codemonkeyjack.com/Dload.html"><div id="trixDv" class="slideListBox" title="http://www.codemonkeyjack.com/Dload.html"><b>Downloads</b></div></a></td></tr>
+</table></div></div></td>
+<td><div id="trixLbl" class="navLbl">&#9658;</div></td></tr>
+</table></div></td></tr>
+<tr><td class="slideTblCel"><div class="navCont">
+<table align="left" border="0" cellpadding="0" cellspacing="0" class="bavConTbl">
+<tr valign="top"><td class="navCel" id="contactCel"><div id="contactCel" class="navContCel"><div class="menuTtl">CONTACT</div>
+<div id="contactSlide" class="slideMenu">
+<table border="0" cellpadding="0" cellspacing="3" id="contactLst" class="slideList">
+<tr><td><a href="http://www.codemonkeyjack.com/Contact.html"><div class="slideListBox" id="contactDv" title="http://www.codemonkeyjack.com/Contact.html"><b>Contact Mr.Jack</b></div></a></td></tr>
+</table></div></div></td>
+<td><div id="contactLbl" class="navLbl">&#9658;</div></td></tr>
+</table></div></td></tr>
+</tbody>
+</table></td>
+	<td valign="top" id="contCelTwo" style="padding:15px;background-image:url(./img/mBG01.jpg);">
+	
+	<table align="center" border="0" cellpadding="0" cellspacing="0" id="mnTbl" style="background-color:#FFFFFF; width:97%;">
+<tr align="center"><td style="padding:15px; font-size:34px; line-height:38px;"><b>Welcome to CodeMonkeyJack.com</b></td></tr>
+<tr align="center"><td style="font-size:24px; line-height:28px; padding-bottom:10px;">Here is a collection of nifty links and useful tools.
+<p align="center" style="font-size:28px; font-variant:small-caps; margin:15px; padding:10px; border-style:solid; border-width:1px; -moz-border-radius:5px; -webkit-border-radius:5px; border-color:#000000;"><b>Please help support Japan,<br>
+here&rsquo;s an easy way that won&rsquo;t cost you a thing:<br>
+<a href="http://www.youtube.com/watch?v=C5yMq0Nrz1g" target="_blank">Genki Dama!!!</a></b>
+<p>Below is the basics of the NavTabs, color-coded for simplicity.</p>
+<p>If you are looking for the Naka-Kon project<br>(still under construction), please go to:<br>
+<a href="http://naka-kon.codemonkeyjack.com/" target="_blank">http://naka-kon.codemonkeyjack.com/</a></p>
+<p>The Naka project requirex the Unity3D Player plug-in,<br>you can download and install it from this link:<br>
+<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!" target="_blank"><img alt="Unity Web Player. Install now!" border="0" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63"></a></p>
+<b>PLEASE BEAR WITH US-<br>THE SITE IS IN THE MIDDLE OF A LARGE UPDATE!</b>
+</td></tr>
+<tr><td style="margin-top:10px; margin-bottom:10px; font-size:16px; line-height:20px; background-color:#000000; color:#FFFFFF; padding:15px;"><ul>
+<li style="padding-bottom:15px;"><b style="color:#FFCC00; text-decoration:underline;">Main Tab:</b> Links to friends &amp; clients&rsquo; websites.</li>
+<li style="padding-bottom:15px;"><b style="color:#FF00CC; text-decoration:underline;">Computers 101 Tab:</b> Basic information and explantion of computer stuff.</li>
+<li style="padding-bottom:15px;"><b style="color:#0099FF; text-decoration:underline;">TIPS &amp; TRIX Tab:</b> A collection of goodies. <i>No vobis , per diligo.</i></li>
+<li><b style="color:#66FFFF; text-decoration:underline;">CONTACT Tab:</b> Send to me your love, hate, and all of your fury.</li>
+</ul></td></tr>
+<tr><td style="padding:15px; border-style:double; border-width:3px; border-color:#FFFF00; background-color:#FFFFFF;">
+<b style="font-size:14px;">NEWS:</b>
+<ul style="margin-top:5px; margin-bottom:0px;">
+<li style="padding-bottom:5px;"><a href="http://news.cnet.com/8301-31001_3-20004982-261.html" target="_blank"><b>LimeWire has been murdered by the RIAA</b></a></li>
+<li style="padding-bottom:5px;"><a href="http://www.abc.net.au/news/stories/2010/05/20/2904349.htm" target="_blank"><b>BEST HEADLINE EVER!!!!!</b></a></li>
+</ul>
+</td></tr>
+</table>
+
+</td></tr>
+</table></td></tr>
+
+<tr><td id="footRw">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" id="footTbl">
+	<tr align="center">
+		<td align="center" id="stuffCel"><a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!" target="_blank"><img alt="Unity Web Player. Install now!" border="0" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63"></a></td>
+		<td id="footCel" style="font-size:10px; line-height:11px;"><b>Copyright 2009-2012</b><br>
+		When reproducing our materials in whole or in part, a hyperlink to CodeMonkeyJack.com should be made.
+<p style="margin:0px; margin-top:2px;">
+All rights reserved. FAIR USE NOTICE: These pages contains copyrighted material the use of<br>
+which has not been specifically authorized by the copyright owner. This website distributes<br>
+this material without profit to those who have expressed a prior interest in receiving the included<br>
+information for research and educational purposes. We believe this constitutes a fair use of any such<br>
+copyrighted material as provided for in 17 U.S.C &sect; 107.</p>
+</td>
+		<td align="right">This site is best viewed with:<br>
+		<a href="http://www.mozilla.com/en-US/firefox/fx/" target="_blank"><b>FireFox Web Browser</b></a></td>
+		<td align="left" style="padding-right:25px;"><a href="http://www.mozilla.com/en-US/firefox/fx/" target="_blank"><img src="http://www.codemonkeyjack.com/img/FireFoxy.png" border="0" height="50" alt="firefoxy.jpg" style="display:inline-block; position:relative;"></a></td>
+		</tr>
+	</table></td></tr>
+</table></body></html>

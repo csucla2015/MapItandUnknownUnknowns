@@ -1,0 +1,102 @@
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 13
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 15
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 18
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addComment.php on line 18
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addComment.php on line 19
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 59
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 60
+[21-Mar-2013 20:05:01] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 62
+[21-Mar-2013 20:05:07] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 17
+[21-Mar-2013 20:05:07] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/showActorInfo.php on line 19
+[21-Mar-2013 20:05:07] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[21-Mar-2013 20:05:07] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[21-Mar-2013 20:05:07] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/showActorInfo.php on line 26
+[30-Mar-2013 20:50:29] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addActorDirector.php on line 63
+[30-Mar-2013 20:50:29] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addActorDirector.php on line 64
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 13
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 15
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 18
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addComment.php on line 18
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addComment.php on line 19
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 59
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 60
+[30-Mar-2013 20:50:37] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 62
+[30-Mar-2013 20:50:43] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieInfo.php on line 21
+[30-Mar-2013 20:50:43] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieInfo.php on line 23
+[30-Mar-2013 20:50:43] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieInfo.php on line 26
+[30-Mar-2013 20:50:43] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addMovieInfo.php on line 26
+[30-Mar-2013 20:50:43] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addMovieInfo.php on line 30
+[30-Mar-2013 20:50:49] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addActorDirector.php on line 63
+[30-Mar-2013 20:50:49] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addActorDirector.php on line 64
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 20
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 22
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 25
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addMovieActor.php on line 25
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addMovieActor.php on line 26
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 35
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 37
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 40
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addMovieActor.php on line 40
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addMovieActor.php on line 44
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 79
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 80
+[30-Mar-2013 20:50:53] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 82
+[30-Mar-2013 20:59:52] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 17
+[30-Mar-2013 20:59:52] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/showActorInfo.php on line 19
+[30-Mar-2013 20:59:52] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[30-Mar-2013 20:59:52] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[30-Mar-2013 20:59:52] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/showActorInfo.php on line 26
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 13
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 15
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 18
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addComment.php on line 18
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addComment.php on line 19
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 59
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 60
+[30-Mar-2013 21:00:01] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 62
+[31-Mar-2013 14:34:35] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 17
+[31-Mar-2013 14:34:35] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/showActorInfo.php on line 19
+[31-Mar-2013 14:34:35] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[31-Mar-2013 14:34:35] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[31-Mar-2013 14:34:35] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/showActorInfo.php on line 26
+[31-Mar-2013 14:34:41] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 17
+[31-Mar-2013 14:34:41] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/showActorInfo.php on line 19
+[31-Mar-2013 14:34:41] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[31-Mar-2013 14:34:41] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/showActorInfo.php on line 22
+[31-Mar-2013 14:34:41] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/showActorInfo.php on line 26
+[31-Mar-2013 15:38:54] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addActorDirector.php on line 63
+[31-Mar-2013 15:38:54] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addActorDirector.php on line 64
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 13
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 15
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 18
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addComment.php on line 18
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addComment.php on line 19
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addComment.php on line 59
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 60
+[31-Mar-2013 15:39:00] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addComment.php on line 62
+[31-Mar-2013 15:39:02] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieInfo.php on line 21
+[31-Mar-2013 15:39:02] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieInfo.php on line 23
+[31-Mar-2013 15:39:02] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieInfo.php on line 26
+[31-Mar-2013 15:39:02] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addMovieInfo.php on line 26
+[31-Mar-2013 15:39:02] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addMovieInfo.php on line 30
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 20
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 22
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 25
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addMovieActor.php on line 25
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_fetch_row(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addMovieActor.php on line 26
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 35
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 37
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: Access denied for user 'meetbhag'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 40
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_query() [<a href='function.mysql-query'>function.mysql-query</a>]: A link to the server could not be established in /home5/meetbhag/public_html/addMovieActor.php on line 40
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/addMovieActor.php on line 44
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/addMovieActor.php on line 79
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 80
+[31-Mar-2013 15:39:05] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/addMovieActor.php on line 82
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_connect() [<a href='function.mysql-connect'>function.mysql-connect</a>]: Access denied for user 'cs143'@'localhost' (using password: NO) in /home5/meetbhag/public_html/search.php on line 27
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_select_db(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/search.php on line 29
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/search.php on line 59
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/search.php on line 68
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/search.php on line 80
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/search.php on line 81
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_query(): supplied argument is not a valid MySQL-Link resource in /home5/meetbhag/public_html/search.php on line 100
+[31-Mar-2013 16:49:16] PHP Warning:  mysql_fetch_array(): supplied argument is not a valid MySQL result resource in /home5/meetbhag/public_html/search.php on line 107

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Heatmap Generation Code</title>
+        <link href="./default.css" rel="stylesheet">
+        <script type="text/javascript" src="./progressBar.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUWgpGiVjQPFfTmOUQ-V4QY1Myj94x7qE&v=3.exp&sensor=false&libraries=visualization"></script>
+
+        <script>
+            var map, pointarray, heatmap, locations = [], heatMapData = [], wght = [], count;
+            var timeout = 1000;
+            var markers = [];
+            var posMarkers = [];
+            var pb;
+
+             var names = ["Los Angeles","Chicago","New York","St. Louis","UCLA","USC"];
+            var weights = [5,10,15,20,25,30];
+
+            var darkData = [];
+            for(var size = 0; size < names.length; size++){
+                darkData[size] = [names[size],weights[size]];
+            }
+            
+            darkData = 
+                    [
+                ["Harlingen",	100],
+["Laredo",	97],
+["Los Angeles",	83],
+["Honolulu",	82],
+["Fresno",	74],
+["Abilene-Sweetwater",	70],
+["Yuma",	68],
+["Houston",	66],
+["Bakersfield",	65],
+["El Paso",	65],
+["San Antonio",	64],
+["Miami",	62],
+["Dallas-Fort Worth",	60],
+["Las Vegas",	60],
+["San Diego",	57],
+["New York",	56],
+["Chicago",	56],
+["San Francisco",	56],
+["Detroit",	55],
+["Corpus Christi",	54],
+["Atlanta",	53],
+["Palm Springs",	53],
+["Monterey-Salinas",	53],
+["Orlando",	53],
+["Sacramento",	53],
+["Baton Rouge",	52],
+["Phoenix",	51],
+["Charlotte",	51],
+["Seattle-Tacoma",	50],
+["Austin",	49],
+["Shreveport",	48],
+["New Orleans",	48],
+["Lake Charles",	48],
+["Tampa",	47],
+["Lafayette",	47],
+["Philadelphia",	47],
+["Charleston-Huntington",	47],
+["Hattiesburg-Laurel",	46],
+["Jacksonville",	46],
+["Albuquerque",	46],
+["Boston",	46],
+["Macon",	45],
+["Tri-Cities",	45],
+["Lubbock",	45],
+["Minneapolis-St Paul",	44],
+["Utica-Rome",	44],
+["Kansas City",	44],
+["Lexington",	44],
+["Augusta",	44],
+["Denver",	44],
+["Nashville",	44],
+["Mobile",	44],
+["Columbus",	44],
+["Florence-Myrtle Beach",	44],
+["St Louis",	44],
+["Watertown",	43],
+["Monroe",	43],
+["Jackson",	43],
+["Salt Lake City",	43],
+["Pittsburgh",	43],
+["Wichita",	43],
+["Memphis",	43],
+["Beaumont-Port Author",	43],
+["Buffalo",	42],
+["Dothan",	42],
+["West Palm Beach",	42],
+["Columbus",	42],
+["Montgomery",	42],
+["Washington",	42],
+["Oklahoma City",	42],
+["Cleveland",	42],
+["Greensboro",	42],
+["Raleigh-Durham",	42],
+["Charleston",	42],
+["Cincinnati",	41],
+["Panama City",	41],
+["Paducah",	41],
+["Rockford",	41],
+["Columbia",	41],
+["Tucson",	41],
+["Terre Haute",	41],
+["Santa Barbara",	41],
+["Amarillo",	41],
+["Savannah",	41],
+["Flint",	41],
+["Tulsa",	41],
+["Baltimore",	41],
+["Ft Wayne",	40],
+["Huntsville",	40],
+["Odessa-Midland",	40],
+["Youngstown-Warren",	40],
+["Hartford",	40],
+["Birmingham",	40],
+["Ft Smith-Fay-Springfield",	40],
+["Indianapolis",	40],
+["Milwaukee",	40],
+["Waco-Temple-Bryan",	40],
+["Portland",	40],
+["Erie",	40],
+["Champaign-Springfield-Decatur",	40],
+["Ft Myers",	39],
+["Little Rock-Pine Bluff",	39],
+["Columbus-Tupelo-West Point",	39],
+["Wichita Falls",	39],
+["Richmond-Petersburg",	39],
+["Providence",	39],
+["Yakima-Pasco",	39],
+["Harrisonburg",	39],
+["Syracuse",	39],
+["Chattanooga",	39],
+["Greenville-Spartenburg",	39],
+["Grand Rapids",	39],
+["Springfield-Holyoke",	38],
+["Spokane",	38],
+["Gainesville",	38],
+["South Bend",	38],
+["Greenville-New Bern-Washington",	38],
+["Jackson",	38],
+["Louisville",	38],
+["Knoxville",	37],
+["Tyler-Longview",	37],
+["Binghamton",	37],
+["Harrisburg-Lancaster-Lebanon-York",	37],
+["Bowling Green",	37],
+["Wilkes Barre-Scranton",	37],
+["Roanoke-Lynchburg",	37],
+["Madison",	37],
+["Omaha",	37],
+["Norfolk-Portsmouth",	37],
+["Cedar Rapids-Waterloo",	37],
+["Lansing",	37],
+["Rochester",	37],
+["Reno",	36],
+["Evansville",	36],
+["Lafayette",	36],
+["Topeka",	36],
+["Marquette",	36],
+["Toledo",	36],
+["Burlington",	36],
+["Albany-Schenectady-Troy",	36],
+["Chico-Redding",	35],
+["Biloxi-Gulfport",	35],
+["La Crosse-Eau Claire",	35],
+["Dayton",	35],
+["Wilmington",	35],
+["Salisbury",	35],
+["Peoria-Bloomington",	35],
+["Des Moines",	35],
+["Springfield",	34],
+["Grand Junction",	34],
+["Medford-Klamath Falls",	34],
+["Boise",	34],
+["Bangor",	34],
+["Davenport-Rock Island-Moline",	34],
+["Colorado Springs",	34],
+["Johnstown-Altoona",	34],
+["Idaho Falls-Pocatello",	34],
+["Traverse City-Cadillac",	33],
+["Tallahassee",	33],
+["Columbia-Jefferson City",	33],
+["Anchorage",	32],
+["Portland-Auburn",	32],
+["Charlottesville",	32],
+["Eugene",	32],
+["Wausau-Rhinelander",	31],
+["Lincoln-Hastings",	31],
+["Albany",	31],
+["Green Bay-Appleton",	31],
+["Minot-Bismarck-Dickinson",	30],
+["Fargo-Valley City",	30],
+["Cheyenne",	30],
+["Sioux City",	29],
+["Rochester-Mason City-Austin",	29],
+["Sioux Falls",	27],
+["Duluth",	26],
+["Missoula",	25],
+["Presque Isle",	0],
+["Wheeling",	0],
+["Lima",	0],
+["Bluefield-Beckley-Oak Hill",	0],
+["Elmira",	0],
+["Alpena",	0],
+["Zanesville",	0],
+["Parkersburg",	0],
+["Clarksburg-Weston",	0],
+["Joplin-Pittsburg",	0],
+["Victoria",	0],
+["Ottumwa-Kirksville",	0],
+["St Joseph",	0],
+["Alexandria",	0],
+["Greenwood-Greenville",	0],
+["Sherman",	0],
+["San Angelo",	0],
+["Meridian",	0],
+["Quincy",	0],
+["Jonesboro",	0],
+["Mankato",	0],
+["North Platte",	0],
+["Fairbanks",	0],
+["Juneau",	0],
+["Butte-Bozeman",	0],
+["Great Falls",	0],
+["Billings",	0],
+["Twin Falls",	0],
+["Rapid City",	0],
+["Helena",	0],
+["Casper-Riverton",	0],
+["Glendive",	0],
+["Eureka",	0],
+["Bend",0]
+];
+
+
+            function toggleHeatMap(controlDiv, map) {
+                controlDiv.style.padding = '5px';
+
+                var controlUI = document.createElement('hmctrl');
+                controlUI.style.backgroundColor = 'white';
+                controlUI.style.borderStyle = 'solid';
+                controlUI.style.borderWidth = '1px';
+                //controlUI.style.borderRadius = '5px';
+                //controlUI.style.paddingTop = '15px';
+                controlUI.style.cursor = 'pointer';
+                controlUI.style.textAligh = 'center';
+                controlUI.title = 'Toggle Heat Map Visualization';
+                controlDiv.appendChild(controlUI);
+
+                var controlText = document.createElement('hmctrl');
+                controlText.style.fontFamily = 'Ariel,sans-serif';
+                controlText.style.fontSize = '12px';
+                controlText.style.paddingLeft = '4px';
+                controlText.style.paddingRight = '4px';
+                controlText.innerHTML = '<b>Toggle Heat</b>';
+                controlUI.appendChild(controlText);
+
+                google.maps.event.addDomListener(controlUI, 'mouseover', function() {
+                    controlUI.style.opacity = 0.90;
+                });
+
+                google.maps.event.addDomListener(controlUI, 'mouseout', function() {
+                    controlUI.style.opacity = 1.00;
+                });
+
+                google.maps.event.addDomListener(controlUI, 'click', function() {
+                    heatmap.setMap(heatmap.getMap() ? null : map);
+                });
+            }
+
+            function toggleMarkers(controlDiv, map) {
+                controlDiv.style.padding = '5px';
+
+                var controlUI = document.createElement('mrkctrl');
+                controlUI.style.backgroundColor = 'white';
+                controlUI.style.borderStyle = 'solid';
+                controlUI.style.borderWidth = '1px';
+                //controlUI.style.borderRadius = '5px';
+                controlUI.style.cursor = 'pointer';
+                controlUI.style.textAligh = 'center';
+                controlUI.title = 'Toggle Markers';
+                controlDiv.appendChild(controlUI);
+
+                var controlText = document.createElement('mrkctrl');
+                controlText.style.fontFamily = 'Arial,sans-serif';
+                controlText.style.fontSize = '12px';
+                controlText.style.paddingLeft = '4px';
+                controlText.style.paddingRight = '4px';
+                controlText.innerHTML = '<b>Toggle Markers</b>';
+                controlUI.appendChild(controlText);
+
+                google.maps.event.addDomListener(controlUI, 'mouseover', function() {
+                    controlUI.style.opacity = 0.90;
+                });
+
+                google.maps.event.addDomListener(controlUI, 'mouseout', function() {
+                    controlUI.style.opacity = 1.00;
+                });
+
+                google.maps.event.addDomListener(controlUI, 'click', function() {
+                    for(var marker in markers){
+                        if(posMarkers[marker].getVisible()){
+                            posMarkers[marker].setVisible(false);
+                        }
+                        else{
+                            posMarkers[marker].setVisible(true);
+                        }
+                    }
+                });
+            }
+
+            function genData() {
+                heatMapData.length = 0;
+                var ww = 100;
+                for (var i = 0; i < 10; i++) {
+                    for (var j = 0; j < 10; j++) {
+                        heatMapData.push({location: new google.maps.LatLng(map.getCenter().lat() + Math.random(), map.getCenter().lng() + Math.random()), weight: ww});
+                        ww--;
+                    }
+                }
+            }
+
+            function convertToHeat() {
+                count = 0;
+                //heatMapData = [];
+                for(var k = 0; k < darkData.length; k++){
+                    wght.push(darkData[k][1]);
+                }
+                console.log(wght);
+                //EXTRACT WEIGHTS
+                pb.start(darkData.length);
+                mark(count);
+            }
+            /* for(var data = 0; data < array.length; data++){
+             geocoder.geocode({'address': array[data].city}, function(results,status){
+             console.log(status);
+             console.log(results[0].geometry.location.lat());
+             if(status == google.maps.GeocoderStatus.OK){
+             console.log("Made it!");
+             heatMapData.push({location: new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng()), weight: data.weight});
+             } 
+             });
+             }*/
+            //console.log(heatMapData);
+
+            function initialize() {
+                var styles = [
+                    {
+                        featureType: "poi",
+                        stylers: [
+                            {"visibility": "off"}
+                        ]
+                    }, {
+                        featureType: "road",
+                        stylers: [
+                            {visibility: "off"}
+                        ]
+                    }
+                ];
+                
+                var styledMap = new google.maps.StyledMapType(styles, {name: "Minimal"});
+
+                var mapOptions = {
+                    zoom: 13,
+                    center: new google.maps.LatLng(37.774546, -122.433523),
+                    mapTypeControlOptions: {
+                        mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']
+                    }
+                };
+
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+                map.mapTypes.set('map_style', styledMap);
+                map.setMapTypeId('map_style');
+                
+                pb = progressBar({strokeWeight:'12px'});
+                map.controls[google.maps.ControlPosition.RIGHT].push(pb.getDiv());
+
+                var toggleHMDiv = document.createElement('hmctrl');
+                var toggleHM = new toggleHeatMap(toggleHMDiv, map);
+
+                var toggleMrkDiv = document.createElement('mrkctrl');
+                var toggleMrk = new toggleMarkers(toggleMrkDiv, map);
+
+                toggleHMDiv.index = 1;
+                toggleMrkDiv.index = 2;
+                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleHMDiv);
+                map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleMrkDiv);
+                
+                google.maps.event.addListener(map,'click',function(event){addMarker(event.latLng)});
+                updateMarkers();
+                convertToHeat();
+                //google.maps.event.addListener(map, 'zoom_changed', zoomChange);
+            }
+
+            function normalize(){
+                
+                console.log("Now normalizing.");
+                var xc;
+                var yc;
+                var wc;
+                var flip = 1;
+                for(var norm = 0; norm < locations.length; norm++){
+                    xc = locations[norm][0];
+                    yc = locations[norm][1];
+                    wc = wght[norm];
+                    for(var rand = 0; rand < 200; rand++){
+                        //heatMapData.push({location: new google.maps.LatLng(xc + flip*Math.random(),yc + Math.random()), weight: wc/(Math.random()*2+3)});
+                        //heatMapData.push({location: new google.maps.LatLng(xc + Math.random(),yc + flip*Math.random()), weight: wc/(Math.random()*2+3)});
+                        heatMapData.push({location: new google.maps.LatLng(xc + Math.random()*0.01, yc + Math.random()*0.01), weight: wc/20});
+                    }
+                }
+                heatMapData.splice(0,locations.length);
+                var pointArray = new google.maps.MVCArray(heatMapData);//taxiData);
+
+                heatmap = new google.maps.visualization.HeatmapLayer({
+                    data: pointArray
+                });
+                console.log("Map normalized");
+                heatmap.setOptions({radius: 15});
+                heatmap.dissipating = true;
+                heatmap.setMap(map);
+                console.log("Map ready!");
+                pb.hide();
+            }
+
+            function sleep(milliseconds){
+                var start = new Date().getTime();
+                for(var i = 0; i < 1e7; i++){
+                    if((new Date().getTime() - start) > milliseconds){
+                        break;
+                    }
+                }
+            }
+            function callback() {
+                return function(results, status) {
+                    console.log("HEY");
+                    if(status == google.maps.GeocoderStatus.OK){
+                    
+                    var star = heatMapData.push({location: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()), weight: wght[count]});
+                    //var marker = new google.maps.Marker(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));
+                    console.log(star);
+                    console.log(wght[count]);
+                    }
+                    else {
+                        alert("Geocode was not successful for the following reason: " + status);
+                    }
+                    //if(count%10){
+                    //    sleep(5000);
+                    //}
+                    count++;
+                    //console.log(results[0].geometry.location.lat() + " " + results[0].geometry.location.lng());
+                };
+            }
+            
+            function mark(position){
+                var geocoder = new google.maps.Geocoder();
+                try{
+                    if(count < darkData.length){
+                 geocoder.geocode({address: darkData[count][0]},function(results, status) {
+                    console.log("Query #" + count);
+                    console.log("Rm Qst = " + (darkData.length-count));
+                    if(status == google.maps.GeocoderStatus.OK){
+                        pb.updateBar(1);
+                        locations.push([results[0].geometry.location.lat(),results[0].geometry.location.lng()]);
+                        heatMapData.push({location: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()), weight: wght[count]});
+                        addMarker(new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng()));
+                    //var marker = new google.maps.Marker(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));
+                    }
+                    if(status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT){
+                        setTimeout(function(){mark(position);},(timeout*10));
+                     }
+                    else{
+                       count++;
+                    }
+                    //if(count%10){
+                    //    sleep(5000);
+                    //}
+                   if(count < darkData.length){
+                       setTimeout(function(){mark(count);},(timeout));
+                   }
+                   else{
+                       setTimeout(normalize,timeout);
+                   }
+                    //console.log(results[0].geometry.location.lat() + " " + results[0].geometry.location.lng());
+                });}
+                else{
+                    console.log("count is now length of data")
+                }
+                    } catch(err){alert(err.message)};
+            }
+            /*function zoomChange() {
+                count = 0;
+                //heatMapData = [];
+                heatmap.setMap(null);
+                for (var i = 0; i < array.length; i++) {
+                    console.log(i);
+                    console.log(wght);
+                    console.log(array[i][0]);
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({address: array[i][0]}, callback());
+                    console.log(heatMapData);
+                }
+                    console.log(heatMapData.length);
+             
+                    var pointArray = new google.maps.MVCArray(heatMapData);
+                    heatmap = new google.maps.visualization.HeatmapLayer({
+                        data: pointArray
+                    });
+                    map.setCenter(new google.maps.LatLng(34.0522, -118.24));
+                    heatmap.setOptions({radius: 50});
+                    heatmap.dissipating = true;
+                    heatmap.setMap(map);
+            }*/
+            function addMarker(loc){
+                var newmark = new google.maps.Marker({
+                   position: loc,
+                   map: map,
+                   visible: true
+                });
+                markers.push(newmark);
+                posMarkers.push(newmark);
+            }
+            function updateMarkers() {
+                for (var marker in markers) {
+                    posMarkers[marker] = new google.maps.Marker({
+                        position: new google.maps.LatLng(markers[marker].lat, markers[marker].lng),
+                        map: map,
+                        visible: markers[marker].visible
+                    });
+                }
+            }
+
+            function changeGradient() {
+                var gradient = [
+                    'rgba(0, 255, 255, 0)',
+                    'rgba(0, 255, 255, 1)',
+                    'rgba(0, 191, 255, 1)',
+                    'rgba(0, 127, 255, 1)',
+                    'rgba(0, 63, 255, 1)',
+                    'rgba(0, 0, 255, 1)',
+                    'rgba(0, 0, 223, 1)',
+                    'rgba(0, 0, 191, 1)',
+                    'rgba(0, 0, 159, 1)',
+                    'rgba(0, 0, 127, 1)',
+                    'rgba(63, 0, 91, 1)',
+                    'rgba(127, 0, 63, 1)',
+                    'rgba(191, 0, 31, 1)',
+                    'rgba(255, 0, 0, 1)'
+                ];
+                heatmap.setOptions({
+                    gradient: heatmap.get('gradient') ? null : gradient
+                });
+            }
+
+            function changeRadius() {
+                heatmap.setOptions({radius: heatmap.get('radius') ? null : 20});
+            }
+
+            function changeOpacity() {
+                heatmap.setOptions({opacity: heatmap.get('opacity') ? null : 0.2});
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    </head>
+
+    <body>
+<div id="panel"><!--      <button onclick="toggleHeatmap();">Toggle Heatmap</button>
+                  <button onclick="changeGradient();">Change gradient</button>
+                  <button onclick="changeRadius();">Change radius</button>
+            <button onclick="changeRadius();">Change radius</button>--></div>
+<div id="map-canvas">&lt;!DOCTYPE html&gt;<br />&lt;html&gt;<br />&nbsp;&nbsp;&nbsp; &lt;head&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;meta charset="utf-8"&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;title&gt;Heatmap Generation Code&lt;/title&gt;</div>
+<div>&lt;link href="./default.css" rel="stylesheet"&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script type="text/javascript" src="progressbar.js"&gt;&lt;/script&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;sensor=false&amp;libraries=visualization"&gt;&lt;/script&gt;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;script&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var map, pointarray, heatmap, locations = [], heatMapData = [], wght = [], count;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var timeout = 1000;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var markers = [];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var posMarkers = [];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var pb;<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var names = ["Los Angeles","Chicago","New York","St. Louis","UCLA","USC"];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var weights = [5,10,15,20,25,30];<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var darkData = [];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var size = 0; size &lt; names.length; size++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; darkData[size] = [names[size],weights[size]];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; darkData = <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<br />["Harlingen",&nbsp;&nbsp;&nbsp; 100],<br />["Laredo",&nbsp;&nbsp;&nbsp; 97],<br />["Los Angeles",&nbsp;&nbsp;&nbsp; 83],<br />["Honolulu",&nbsp;&nbsp;&nbsp; 82],<br />["Fresno",&nbsp;&nbsp;&nbsp; 74],<br />["Abilene-Sweetwater",&nbsp;&nbsp;&nbsp; 70],<br />["Yuma",&nbsp;&nbsp;&nbsp; 68],<br />["Houston",&nbsp;&nbsp;&nbsp; 66],<br />["Bakersfield",&nbsp;&nbsp;&nbsp; 65],<br />["El Paso",&nbsp;&nbsp;&nbsp; 65],<br />["San Antonio",&nbsp;&nbsp;&nbsp; 64],<br />["Miami",&nbsp;&nbsp;&nbsp; 62],<br />["Dallas-Fort Worth",&nbsp;&nbsp;&nbsp; 60],<br />["Las Vegas",&nbsp;&nbsp;&nbsp; 60],<br />["San Diego",&nbsp;&nbsp;&nbsp; 57],<br />["New York",&nbsp;&nbsp;&nbsp; 56],<br />["Chicago",&nbsp;&nbsp;&nbsp; 56],<br />["San Francisco",&nbsp;&nbsp;&nbsp; 56],<br />["Detroit",&nbsp;&nbsp;&nbsp; 55],<br />["Corpus Christi",&nbsp;&nbsp;&nbsp; 54],<br />["Atlanta",&nbsp;&nbsp;&nbsp; 53],<br />["Palm Springs",&nbsp;&nbsp;&nbsp; 53],<br />["Monterey-Salinas",&nbsp;&nbsp;&nbsp; 53],<br />["Orlando",&nbsp;&nbsp;&nbsp; 53],<br />["Sacramento",&nbsp;&nbsp;&nbsp; 53],<br />["Baton Rouge",&nbsp;&nbsp;&nbsp; 52],<br />["Phoenix",&nbsp;&nbsp;&nbsp; 51],<br />["Charlotte",&nbsp;&nbsp;&nbsp; 51],<br />["Seattle-Tacoma",&nbsp;&nbsp;&nbsp; 50],<br />["Austin",&nbsp;&nbsp;&nbsp; 49],<br />["Shreveport",&nbsp;&nbsp;&nbsp; 48],<br />["New Orleans",&nbsp;&nbsp;&nbsp; 48],<br />["Lake Charles",&nbsp;&nbsp;&nbsp; 48],<br />["Tampa",&nbsp;&nbsp;&nbsp; 47],<br />["Lafayette",&nbsp;&nbsp;&nbsp; 47],<br />["Philadelphia",&nbsp;&nbsp;&nbsp; 47],<br />["Charleston-Huntington",&nbsp;&nbsp;&nbsp; 47],<br />["Hattiesburg-Laurel",&nbsp;&nbsp;&nbsp; 46],<br />["Jacksonville",&nbsp;&nbsp;&nbsp; 46],<br />["Albuquerque",&nbsp;&nbsp;&nbsp; 46],<br />["Boston",&nbsp;&nbsp;&nbsp; 46],<br />["Macon",&nbsp;&nbsp;&nbsp; 45],<br />["Tri-Cities",&nbsp;&nbsp;&nbsp; 45],<br />["Lubbock",&nbsp;&nbsp;&nbsp; 45],<br />["Minneapolis-St Paul",&nbsp;&nbsp;&nbsp; 44],<br />["Utica-Rome",&nbsp;&nbsp;&nbsp; 44],<br />["Kansas City",&nbsp;&nbsp;&nbsp; 44],<br />["Lexington",&nbsp;&nbsp;&nbsp; 44],<br />["Augusta",&nbsp;&nbsp;&nbsp; 44],<br />["Denver",&nbsp;&nbsp;&nbsp; 44],<br />["Nashville",&nbsp;&nbsp;&nbsp; 44],<br />["Mobile",&nbsp;&nbsp;&nbsp; 44],<br />["Columbus",&nbsp;&nbsp;&nbsp; 44],<br />["Florence-Myrtle Beach",&nbsp;&nbsp;&nbsp; 44],<br />["St Louis",&nbsp;&nbsp;&nbsp; 44],<br />["Watertown",&nbsp;&nbsp;&nbsp; 43],<br />["Monroe",&nbsp;&nbsp;&nbsp; 43],<br />["Jackson",&nbsp;&nbsp;&nbsp; 43],<br />["Salt Lake City",&nbsp;&nbsp;&nbsp; 43],<br />["Pittsburgh",&nbsp;&nbsp;&nbsp; 43],<br />["Wichita",&nbsp;&nbsp;&nbsp; 43],<br />["Memphis",&nbsp;&nbsp;&nbsp; 43],<br />["Beaumont-Port Author",&nbsp;&nbsp;&nbsp; 43],<br />["Buffalo",&nbsp;&nbsp;&nbsp; 42],<br />["Dothan",&nbsp;&nbsp;&nbsp; 42],<br />["West Palm Beach",&nbsp;&nbsp;&nbsp; 42],<br />["Columbus",&nbsp;&nbsp;&nbsp; 42],<br />["Montgomery",&nbsp;&nbsp;&nbsp; 42],<br />["Washington",&nbsp;&nbsp;&nbsp; 42],<br />["Oklahoma City",&nbsp;&nbsp;&nbsp; 42],<br />["Cleveland",&nbsp;&nbsp;&nbsp; 42],<br />["Greensboro",&nbsp;&nbsp;&nbsp; 42],<br />["Raleigh-Durham",&nbsp;&nbsp;&nbsp; 42],<br />["Charleston",&nbsp;&nbsp;&nbsp; 42],<br />["Cincinnati",&nbsp;&nbsp;&nbsp; 41],<br />["Panama City",&nbsp;&nbsp;&nbsp; 41],<br />["Paducah",&nbsp;&nbsp;&nbsp; 41],<br />["Rockford",&nbsp;&nbsp;&nbsp; 41],<br />["Columbia",&nbsp;&nbsp;&nbsp; 41],<br />["Tucson",&nbsp;&nbsp;&nbsp; 41],<br />["Terre Haute",&nbsp;&nbsp;&nbsp; 41],<br />["Santa Barbara",&nbsp;&nbsp;&nbsp; 41],<br />["Amarillo",&nbsp;&nbsp;&nbsp; 41],<br />["Savannah",&nbsp;&nbsp;&nbsp; 41],<br />["Flint",&nbsp;&nbsp;&nbsp; 41],<br />["Tulsa",&nbsp;&nbsp;&nbsp; 41],<br />["Baltimore",&nbsp;&nbsp;&nbsp; 41],<br />["Ft Wayne",&nbsp;&nbsp;&nbsp; 40],<br />["Huntsville",&nbsp;&nbsp;&nbsp; 40],<br />["Odessa-Midland",&nbsp;&nbsp;&nbsp; 40],<br />["Youngstown-Warren",&nbsp;&nbsp;&nbsp; 40],<br />["Hartford",&nbsp;&nbsp;&nbsp; 40],<br />["Birmingham",&nbsp;&nbsp;&nbsp; 40],<br />["Ft Smith-Fay-Springfield",&nbsp;&nbsp;&nbsp; 40],<br />["Indianapolis",&nbsp;&nbsp;&nbsp; 40],<br />["Milwaukee",&nbsp;&nbsp;&nbsp; 40],<br />["Waco-Temple-Bryan",&nbsp;&nbsp;&nbsp; 40],<br />["Portland",&nbsp;&nbsp;&nbsp; 40],<br />["Erie",&nbsp;&nbsp;&nbsp; 40],<br />["Champaign-Springfield-Decatur",&nbsp;&nbsp;&nbsp; 40],<br />["Ft Myers",&nbsp;&nbsp;&nbsp; 39],<br />["Little Rock-Pine Bluff",&nbsp;&nbsp;&nbsp; 39],<br />["Columbus-Tupelo-West Point",&nbsp;&nbsp;&nbsp; 39],<br />["Wichita Falls",&nbsp;&nbsp;&nbsp; 39],<br />["Richmond-Petersburg",&nbsp;&nbsp;&nbsp; 39],<br />["Providence",&nbsp;&nbsp;&nbsp; 39],<br />["Yakima-Pasco",&nbsp;&nbsp;&nbsp; 39],<br />["Harrisonburg",&nbsp;&nbsp;&nbsp; 39],<br />["Syracuse",&nbsp;&nbsp;&nbsp; 39],<br />["Chattanooga",&nbsp;&nbsp;&nbsp; 39],<br />["Greenville-Spartenburg",&nbsp;&nbsp;&nbsp; 39],<br />["Grand Rapids",&nbsp;&nbsp;&nbsp; 39],<br />["Springfield-Holyoke",&nbsp;&nbsp;&nbsp; 38],<br />["Spokane",&nbsp;&nbsp;&nbsp; 38],<br />["Gainesville",&nbsp;&nbsp;&nbsp; 38],<br />["South Bend",&nbsp;&nbsp;&nbsp; 38],<br />["Greenville-New Bern-Washington",&nbsp;&nbsp;&nbsp; 38],<br />["Jackson",&nbsp;&nbsp;&nbsp; 38],<br />["Louisville",&nbsp;&nbsp;&nbsp; 38],<br />["Knoxville",&nbsp;&nbsp;&nbsp; 37],<br />["Tyler-Longview",&nbsp;&nbsp;&nbsp; 37],<br />["Binghamton",&nbsp;&nbsp;&nbsp; 37],<br />["Harrisburg-Lancaster-Lebanon-York",&nbsp;&nbsp;&nbsp; 37],<br />["Bowling Green",&nbsp;&nbsp;&nbsp; 37],<br />["Wilkes Barre-Scranton",&nbsp;&nbsp;&nbsp; 37],<br />["Roanoke-Lynchburg",&nbsp;&nbsp;&nbsp; 37],<br />["Madison",&nbsp;&nbsp;&nbsp; 37],<br />["Omaha",&nbsp;&nbsp;&nbsp; 37],<br />["Norfolk-Portsmouth",&nbsp;&nbsp;&nbsp; 37],<br />["Cedar Rapids-Waterloo",&nbsp;&nbsp;&nbsp; 37],<br />["Lansing",&nbsp;&nbsp;&nbsp; 37],<br />["Rochester",&nbsp;&nbsp;&nbsp; 37],<br />["Reno",&nbsp;&nbsp;&nbsp; 36],<br />["Evansville",&nbsp;&nbsp;&nbsp; 36],<br />["Lafayette",&nbsp;&nbsp;&nbsp; 36],<br />["Topeka",&nbsp;&nbsp;&nbsp; 36],<br />["Marquette",&nbsp;&nbsp;&nbsp; 36],<br />["Toledo",&nbsp;&nbsp;&nbsp; 36],<br />["Burlington",&nbsp;&nbsp;&nbsp; 36],<br />["Albany-Schenectady-Troy",&nbsp;&nbsp;&nbsp; 36],<br />["Chico-Redding",&nbsp;&nbsp;&nbsp; 35],<br />["Biloxi-Gulfport",&nbsp;&nbsp;&nbsp; 35],<br />["La Crosse-Eau Claire",&nbsp;&nbsp;&nbsp; 35],<br />["Dayton",&nbsp;&nbsp;&nbsp; 35],<br />["Wilmington",&nbsp;&nbsp;&nbsp; 35],<br />["Salisbury",&nbsp;&nbsp;&nbsp; 35],<br />["Peoria-Bloomington",&nbsp;&nbsp;&nbsp; 35],<br />["Des Moines",&nbsp;&nbsp;&nbsp; 35],<br />["Springfield",&nbsp;&nbsp;&nbsp; 34],<br />["Grand Junction",&nbsp;&nbsp;&nbsp; 34],<br />["Medford-Klamath Falls",&nbsp;&nbsp;&nbsp; 34],<br />["Boise",&nbsp;&nbsp;&nbsp; 34],<br />["Bangor",&nbsp;&nbsp;&nbsp; 34],<br />["Davenport-Rock Island-Moline",&nbsp;&nbsp;&nbsp; 34],<br />["Colorado Springs",&nbsp;&nbsp;&nbsp; 34],<br />["Johnstown-Altoona",&nbsp;&nbsp;&nbsp; 34],<br />["Idaho Falls-Pocatello",&nbsp;&nbsp;&nbsp; 34],<br />["Traverse City-Cadillac",&nbsp;&nbsp;&nbsp; 33],<br />["Tallahassee",&nbsp;&nbsp;&nbsp; 33],<br />["Columbia-Jefferson City",&nbsp;&nbsp;&nbsp; 33],<br />["Anchorage",&nbsp;&nbsp;&nbsp; 32],<br />["Portland-Auburn",&nbsp;&nbsp;&nbsp; 32],<br />["Charlottesville",&nbsp;&nbsp;&nbsp; 32],<br />["Eugene",&nbsp;&nbsp;&nbsp; 32],<br />["Wausau-Rhinelander",&nbsp;&nbsp;&nbsp; 31],<br />["Lincoln-Hastings",&nbsp;&nbsp;&nbsp; 31],<br />["Albany",&nbsp;&nbsp;&nbsp; 31],<br />["Green Bay-Appleton",&nbsp;&nbsp;&nbsp; 31],<br />["Minot-Bismarck-Dickinson",&nbsp;&nbsp;&nbsp; 30],<br />["Fargo-Valley City",&nbsp;&nbsp;&nbsp; 30],<br />["Cheyenne",&nbsp;&nbsp;&nbsp; 30],<br />["Sioux City",&nbsp;&nbsp;&nbsp; 29],<br />["Rochester-Mason City-Austin",&nbsp;&nbsp;&nbsp; 29],<br />["Sioux Falls",&nbsp;&nbsp;&nbsp; 27],<br />["Duluth",&nbsp;&nbsp;&nbsp; 26],<br />["Missoula",&nbsp;&nbsp;&nbsp; 25],<br />["Presque Isle",&nbsp;&nbsp;&nbsp; 0],<br />["Wheeling",&nbsp;&nbsp;&nbsp; 0],<br />["Lima",&nbsp;&nbsp;&nbsp; 0],<br />["Bluefield-Beckley-Oak Hill",&nbsp;&nbsp;&nbsp; 0],<br />["Elmira",&nbsp;&nbsp;&nbsp; 0],<br />["Alpena",&nbsp;&nbsp;&nbsp; 0],<br />["Zanesville",&nbsp;&nbsp;&nbsp; 0],<br />["Parkersburg",&nbsp;&nbsp;&nbsp; 0],<br />["Clarksburg-Weston",&nbsp;&nbsp;&nbsp; 0],<br />["Joplin-Pittsburg",&nbsp;&nbsp;&nbsp; 0],<br />["Victoria",&nbsp;&nbsp;&nbsp; 0],<br />["Ottumwa-Kirksville",&nbsp;&nbsp;&nbsp; 0],<br />["St Joseph",&nbsp;&nbsp;&nbsp; 0],<br />["Alexandria",&nbsp;&nbsp;&nbsp; 0],<br />["Greenwood-Greenville",&nbsp;&nbsp;&nbsp; 0],<br />["Sherman",&nbsp;&nbsp;&nbsp; 0],<br />["San Angelo",&nbsp;&nbsp;&nbsp; 0],<br />["Meridian",&nbsp;&nbsp;&nbsp; 0],<br />["Quincy",&nbsp;&nbsp;&nbsp; 0],<br />["Jonesboro",&nbsp;&nbsp;&nbsp; 0],<br />["Mankato",&nbsp;&nbsp;&nbsp; 0],<br />["North Platte",&nbsp;&nbsp;&nbsp; 0],<br />["Fairbanks",&nbsp;&nbsp;&nbsp; 0],<br />["Juneau",&nbsp;&nbsp;&nbsp; 0],<br />["Butte-Bozeman",&nbsp;&nbsp;&nbsp; 0],<br />["Great Falls",&nbsp;&nbsp;&nbsp; 0],<br />["Billings",&nbsp;&nbsp;&nbsp; 0],<br />["Twin Falls",&nbsp;&nbsp;&nbsp; 0],<br />["Rapid City",&nbsp;&nbsp;&nbsp; 0],<br />["Helena",&nbsp;&nbsp;&nbsp; 0],<br />["Casper-Riverton",&nbsp;&nbsp;&nbsp; 0],<br />["Glendive",&nbsp;&nbsp;&nbsp; 0],<br />["Eureka",&nbsp;&nbsp;&nbsp; 0],<br />["Bend",0]<br />];<br /><br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function toggleHeatMap(controlDiv, map) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlDiv.style.padding = '5px';<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var controlUI = document.createElement('hmctrl');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.backgroundColor = 'white';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.borderStyle = 'solid';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.borderWidth = '1px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //controlUI.style.borderRadius = '5px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //controlUI.style.paddingTop = '15px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.cursor = 'pointer';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.textAligh = 'center';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.title = 'Toggle Heat Map Visualization';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlDiv.appendChild(controlUI);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var controlText = document.createElement('hmctrl');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.fontFamily = 'Ariel,sans-serif';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.fontSize = '12px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.paddingLeft = '4px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.paddingRight = '4px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.innerHTML = '&lt;b&gt;Toggle Heat&lt;/b&gt;';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.appendChild(controlText);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(controlUI, 'mouseover', function() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.opacity = 0.90;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(controlUI, 'mouseout', function() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.opacity = 1.00;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(controlUI, 'click', function() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setMap(heatmap.getMap() ? null : map);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function toggleMarkers(controlDiv, map) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlDiv.style.padding = '5px';<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var controlUI = document.createElement('mrkctrl');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.backgroundColor = 'white';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.borderStyle = 'solid';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.borderWidth = '1px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //controlUI.style.borderRadius = '5px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.cursor = 'pointer';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.textAligh = 'center';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.title = 'Toggle Markers';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlDiv.appendChild(controlUI);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var controlText = document.createElement('mrkctrl');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.fontFamily = 'Arial,sans-serif';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.fontSize = '12px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.paddingLeft = '4px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.style.paddingRight = '4px';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlText.innerHTML = '&lt;b&gt;Toggle Markers&lt;/b&gt;';<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.appendChild(controlText);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(controlUI, 'mouseover', function() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.opacity = 0.90;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(controlUI, 'mouseout', function() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; controlUI.style.opacity = 1.00;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(controlUI, 'click', function() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var marker in markers){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(posMarkers[marker].getVisible()){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; posMarkers[marker].setVisible(false);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; posMarkers[marker].setVisible(true);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function genData() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatMapData.length = 0;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var ww = 100;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; 10; i++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var j = 0; j &lt; 10; j++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatMapData.push({location: new google.maps.LatLng(map.getCenter().lat() + Math.random(), map.getCenter().lng() + Math.random()), weight: ww});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ww--;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function convertToHeat() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count = 0;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //heatMapData = [];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var k = 0; k &lt; darkData.length; k++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wght.push(darkData[k][1]);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //EXTRACT WEIGHTS<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pb.start(darkData.length);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mark(count);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /* for(var data = 0; data &lt; array.length; data++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; geocoder.geocode({'address': array[data].city}, function(results,status){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.log(status);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; console.log(results[0].geometry.location.lat());<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(status == google.maps.GeocoderStatus.OK){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatMapData.push({location: new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng()), weight: data.weight});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }*/<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //console.log(heatMapData);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function initialize() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var styles = [<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; featureType: "poi",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stylers: [<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {"visibility": "off"}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }, {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; featureType: "road",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stylers: [<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {visibility: "off"}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var styledMap = new google.maps.StyledMapType(styles, {name: "Minimal"});<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var mapOptions = {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; zoom: 13,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; center: new google.maps.LatLng(37.774546, -122.433523),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mapTypeControlOptions: {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'map_style']<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.mapTypes.set('map_style', styledMap);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.setMapTypeId('map_style');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pb = progressBar({strokeWeight:'12px'});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.controls[google.maps.ControlPosition.RIGHT].push(pb.getDiv());<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var toggleHMDiv = document.createElement('hmctrl');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var toggleHM = new toggleHeatMap(toggleHMDiv, map);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var toggleMrkDiv = document.createElement('mrkctrl');<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var toggleMrk = new toggleMarkers(toggleMrkDiv, map);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; toggleHMDiv.index = 1;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; toggleMrkDiv.index = 2;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleHMDiv);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.controls[google.maps.ControlPosition.TOP_RIGHT].push(toggleMrkDiv);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addListener(map,'click',function(event){addMarker(event.latLng)});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; updateMarkers();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; convertToHeat();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //google.maps.event.addListener(map, 'zoom_changed', zoomChange);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function normalize(){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var xc;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var yc;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var wc;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var flip = 1;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var norm = 0; norm &lt; locations.length; norm++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; xc = locations[norm][0];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yc = locations[norm][1];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wc = wght[norm];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var rand = 0; rand &lt; 200; rand++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //heatMapData.push({location: new google.maps.LatLng(xc + flip*Math.random(),yc + Math.random()), weight: wc/(Math.random()*2+3)});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //heatMapData.push({location: new google.maps.LatLng(xc + Math.random(),yc + flip*Math.random()), weight: wc/(Math.random()*2+3)});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatMapData.push({location: new google.maps.LatLng(xc + Math.random()*0.01, yc + Math.random()*0.01), weight: wc/20});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatMapData.splice(0,locations.length);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var pointArray = new google.maps.MVCArray(heatMapData);//taxiData);<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap = new google.maps.visualization.HeatmapLayer({<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data: pointArray<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setOptions({radius: 15});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.dissipating = true;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setMap(map);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pb.hide();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function sleep(milliseconds){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var start = new Date().getTime();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(var i = 0; i &lt; 1e7; i++){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if((new Date().getTime() - start) &gt; milliseconds){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function callback() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return function(results, status) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(status == google.maps.GeocoderStatus.OK){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var star = heatMapData.push({location: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()), weight: wght[count]});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //var marker = new google.maps.Marker(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert("Geocode was not successful for the following reason: " + status);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //if(count%10){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp; sleep(5000);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count++;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //console.log(results[0].geometry.location.lat() + " " + results[0].geometry.location.lng());<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; };<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function mark(position){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var geocoder = new google.maps.Geocoder();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; try{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(count &lt; darkData.length){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; geocoder.geocode({address: darkData[count][0]},function(results, status) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(status == google.maps.GeocoderStatus.OK){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pb.updateBar(1);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; locations.push([results[0].geometry.location.lat(),results[0].geometry.location.lng()]);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatMapData.push({location: new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()), weight: wght[count]});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; addMarker(new google.maps.LatLng(results[0].geometry.location.lat(),results[0].geometry.location.lng()));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //var marker = new google.maps.Marker(new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng()));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(function(){mark(position);},(timeout*10));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count++;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //if(count%10){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp;&nbsp;&nbsp; sleep(5000);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if(count &lt; darkData.length){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(function(){mark(count);},(timeout));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; setTimeout(normalize,timeout);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });}<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; } catch(err){alert(err.message)};<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /*function zoomChange() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count = 0;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //heatMapData = [];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setMap(null);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var i = 0; i &lt; array.length; i++) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var geocoder = new google.maps.Geocoder();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; geocoder.geocode({address: array[i][0]}, callback());<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var pointArray = new google.maps.MVCArray(heatMapData);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap = new google.maps.visualization.HeatmapLayer({<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; data: pointArray<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map.setCenter(new google.maps.LatLng(34.0522, -118.24));<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setOptions({radius: 50});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.dissipating = true;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setMap(map);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }*/<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function addMarker(loc){<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var newmark = new google.maps.Marker({<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: loc,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map: map,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; visible: true<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; markers.push(newmark);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; posMarkers.push(newmark);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function updateMarkers() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for (var marker in markers) {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; posMarkers[marker] = new google.maps.Marker({<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; position: new google.maps.LatLng(markers[marker].lat, markers[marker].lng),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; map: map,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; visible: markers[marker].visible<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function changeGradient() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; var gradient = [<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 255, 255, 0)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 255, 255, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 191, 255, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 127, 255, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 63, 255, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 0, 255, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 0, 223, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 0, 191, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 0, 159, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(0, 0, 127, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(63, 0, 91, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(127, 0, 63, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(191, 0, 31, 1)',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'rgba(255, 0, 0, 1)'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ];<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setOptions({<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gradient: heatmap.get('gradient') ? null : gradient<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; });<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function changeRadius() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setOptions({radius: heatmap.get('radius') ? null : 20});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; function changeOpacity() {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; heatmap.setOptions({opacity: heatmap.get('opacity') ? null : 0.2});<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; google.maps.event.addDomListener(window, 'load', initialize);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;/script&gt;</div>
+<div><br />&nbsp;&nbsp;&nbsp; &lt;/head&gt;<br /><br />&nbsp;&nbsp;&nbsp; &lt;body&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;div id="map-canvas"&gt;&lt;/div&gt;<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />&nbsp;&nbsp;&nbsp; &lt;/body&gt;<br />&lt;/html&gt;</div>
+</body>
+</html>

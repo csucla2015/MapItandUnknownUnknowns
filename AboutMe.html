@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<!-- HTML5 shim for IE backwards compatibility -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+<style type="text/css">
+img {
+margin-left:5px;
+margin-right:5px;
+}
+.pull-middle {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+html, body {height: 100%;}
+
+#wrap {min-height: 100%;}
+
+#main {overflow:auto;
+	padding-bottom: 180px;}  /* must be same height as the footer */
+
+#footer {position: relative;
+	margin-top: -180px; /* negative value of footer height */
+	height: 180px;
+	clear:both;} 
+
+/*Opera Fix*/
+body:before {/* thanks to Maleika (Kohoutec)*/
+content:"";
+height:100%;
+float:left;
+width:0;
+margin-top:-32767px;/* thank you Erik J - negate effect of float*/
+}
+
+</style>
+
+</head>
+
+<body>
+<nav class="navbar navbar-inverse">
+	<div class="navbar-inner">
+    	<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+		</a>
+    <a class="brand" href="./">Meet's website</a>
+    
+    <div class="nav-collapse">
+    <ul class="nav">
+      <li><a href="./">Home</a> </li>
+       <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Projects <span class="caret"></span></a>
+      	<ul class="dropdown-menu">
+        	<li><a href="./directory.html"> My Own IMDB</a></li>
+            <li><a href="#">Shake Snake</a></li>
+            <li><a href="./calculator.php">Calculator</a></li>
+        </ul>
+      </li>
+       <li class="active"><a href="./AboutMe.html">About me</a></li>
+      <li><a href="./Contact.html">Contact</a></li>
+     
+      <li><a href="#">Other interests</a></li>
+      
+    </ul>
+    </div>
+    </div>
+</nav>
+<div class="container-fluid">
+	<div class="row-fluid">
+    	<header class="span8 hero-unit">
+        	<img src="img/Meet.jpg" alt="Meet. "  />
+        	<h1>Meet Bhagdev</h1>
+            <p>Second year UCLA student.</p>
+            <p><a href="https://www.facebook.com/meet.bhagdev" class="btn btn-primary btn-large">Learn more</a>
+        </header>    
+    </div>
+    
+
+      
+   
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<nav class="navbar navbar-inverse">
+<div class ="navbar-inner navbar-fixed-bottom">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+		</a>
+    <a class="pull-right" ><font color="#CCCCCC">&copy; 2013 Meet Bhagdev</font></a>
+</div>
+</nav>
+</body>
+
+</html>

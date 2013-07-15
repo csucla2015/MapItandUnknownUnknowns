@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tagClouds>
+  <einstellungen>
+    <allgemein modus="wolke" breite="1000" hoehe="1000" hintergrundfarbe="0xFFFFFF" rahmenfarbe="0xFFFFFF"/>
+    <wolke prozentsatz_vertikal="40"/>
+    <globus radius="" maximale_Drehgeschwindigkeit=""/>
+    <fliegen geschwindigkeit_aktiv="" geschwindigkeit_passiv="" richtung=""/>
+    <schrift schriftart="Arial" kleinste_Schriftgr="46" groesste_Schriftgr="98" link_dekoration="nounderline"/>
+    <farbe wert="0xFF7600"/>
+    <farbe wert="0x87A800"/>
+    <farbe wert="0xDE2159"/>
+    <farbe wert="0x039FAF"/>
+  </einstellungen>
+  <tag linkURL="http://conspiracyhub.com/" prioritaet="5" text="Conspiracy Hub" target="_parent"/>
+  <tag linkURL="http://whale.to/" prioritaet="4" text="Whale.to" target="_parent"/>
+  <tag linkURL="http://www.sprword.com/" prioritaet="5" text="Sprword" target="_parent"/>
+  <tag linkURL="http://thoughtmaybe.com/" prioritaet="9" text="Thought Maybe" target="_parent"/>
+  <tag linkURL="http://www.crystalinks.com/directory.html" prioritaet="2" text="Crystal Links" target="_parent"/>
+  <tag linkURL="http://illuminatiwatcher.com/" prioritaet="5" text="Illuminati Watcher" target="_parent"/>
+  <tag linkURL="http://www.abovetopsecret.com/index.php" prioritaet="6" text="AboveTopSecret.com " target="_parent"/>
+  <tag linkURL="http://truth-out.org/" prioritaet="5" text="Truthout " target="_parent"/>
+  <tag linkURL=" http://whatreallyhappened.com/" prioritaet="2" text="WHAT REALLY HAPPENED" target="_parent"/>
+  <tag linkURL="http://www.abovetopsecret.com/" prioritaet="3" text="AboveTopSecret.com" target="_parent"/>
+  <tag linkURL="http://truthmovement.com/" prioritaet="9" text="Truth Movement" target="_parent"/>
+  <tag linkURL="http://www.conspirazzi.com/" prioritaet="3" text="Conspirazzi" target="_parent"/>
+</tagClouds>

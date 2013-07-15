@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+
+
+
+
+
+
+
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unknown Unknowns</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/bootstrap-responsive.css" rel="stylesheet" type="text/css">
+<!-- HTML5 shim for IE backwards compatibility -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+    <style type="text/css">
+img {
+margin-left:5px;
+margin-right:5px;
+}
+.pull-middle {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+    /* Background Color */
+.tb2 {
+  background-color : #F8F8FF  ;
+border-radius:10px;
+  width: 600px;
+height:80px;
+}
+
+.tb3 {
+  background-color : #FFA500  ;
+border-radius:10px;
+  width: 600px;
+height:80px;
+}
+
+.tb4 {
+  background-color : #00FFFF  ;
+border-radius:10px;
+  width: 600px;
+height:80px;
+}
+
+.tb5 {
+  background-color : #FFFAF0;
+border-radius:10px;
+  width: 600px;
+height:80px;
+}
+
+</style>
+</head>
+
+<body>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p><nav class="navbar navbar-inverse">
+<div class="navbar-inner"><a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a> <a class="brand" href="#">Unknown Unknowns</a>
+<div class="nav-collapse">
+<ul class="nav">
+<li class="active"><a href="#">Home</a></li>
+<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">List <span class="caret"></span></a>
+<ul class="dropdown-menu">
+<li><a href="./showActorInfo.php"> List of people</a></li>
+<li><a href="./showYoutubeInfo.php">List of youtube links</a></li>
+<li><a href="./showMovieInfo.php">List of Articles</a></li>
+<li><a href="./showCategoriesInfo.php">List of Categories(NEW)</a></li>
+<li><a href="./showCategoriesbookInfo.php">List of ebook Categories(NEW)</a></li>
+</ul>
+</li>
+<li><a href="./AboutThe Company.html">About me</a></li>
+<li><a href="./Contact.html">Contact</a></li>
+<li><a href="#">Future endeavours</a></li>
+</ul>
+</div>
+</div>
+</nav></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<!--?php $cont = json_decode(file_get_contents('https://gdata.youtube.com/feeds/api/users/MrJacktemplar/playlists?v=2&alt=json&feature=plcp')); 
+/*<?php $feed = $cont--->
+<p>feed-&gt;entry; ?&gt;</p>
+<p></p>
+<!--?php if(count($feed)): foreach($feed as $item): // youtube start ?-->
+<p></p>
+<!--?php echo $item--->
+<p>title-&gt;{'$t'} ?&gt;</p>
+<p></p>
+<!--?php echo $item--->
+<p>{'media$group'}-&gt;{'media$description'}-&gt;{'$t'} ?&gt;</p>
+<p></p>
+<!--?php endforeach; endif; // youtube end ?-->
+<p>*/ echo $cont; ?&gt;</p>
+</body>
+</html>
